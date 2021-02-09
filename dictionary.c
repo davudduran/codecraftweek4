@@ -23,6 +23,12 @@ const unsigned int N = 26;
 node *table[N];
 int words=0;
 
+// Hashes word to a number
+unsigned int hash(const char *word)
+{
+    return tolower(word[0]) - 'a';
+}
+
 // Returns true if word is in dictionary else false
 bool check(const char *word)
 {
@@ -35,18 +41,7 @@ bool check(const char *word)
     return 0;
 }
 
-// Hashes word to a number
-unsigned int hash(const char *word)
-{
-    int temp=0;
-    for(int i=0;word[i]!='\0';i++){
-        temp+=tolower(word[i]);
-    }
-    return temp%N;
 
-    // This hash table code taken from
-    // David Emily on Youtube
-}
 
 // Loads dictionary into memory, returning true if successful else false
 bool load(const char *dictionary)
