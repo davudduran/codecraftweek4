@@ -1,4 +1,4 @@
-// Implements a dictionary's functionality
+//İhtiyaç duyulan kütüphaneleri çağırır
 #include <stdio.h>
 #include <string.h>
 #include <strings.h>
@@ -8,7 +8,7 @@
 
 #include "dictionary.h"
 
-// Represents a node in a hash table
+// Hash tablosundaki bir düğümü temsil eder.
 typedef struct node
 {
     char word[LENGTH + 1];
@@ -16,20 +16,20 @@ typedef struct node
 }
 node;
 
-// Number of buckets in hash table
+// Hash tablosundaki bucket(kova) sayısı
 const unsigned int N = 26;
 
-// Hash table
+// Hash tablosu
 node *table[N];
 int words=0;
 
-// Hashes word to a number
+//Kelimeyi bir sayıya hashler.
 unsigned int hash(const char *word)
 {
     return tolower(word[0]) - 'a';
 }
 
-// Returns true if word is in dictionary else false
+//Kelime sözlükte ise true değerini döndürür, değilse false değerini döndürür.
 bool check(const char *word)
 {
     int temp=hash(word);
@@ -43,7 +43,7 @@ bool check(const char *word)
 
 
 
-// Loads dictionary into memory, returning true if successful else false
+// Sözlüğü belleğe yükler, başarılı olursa true döndürür, değilse false değerini döndürür.
 bool load(const char *dictionary)
 {
 
@@ -73,13 +73,14 @@ bool load(const char *dictionary)
     return true;
 }
 
-// Returns number of words in dictionary if loaded else 0 if not yet loaded
+//Sözlükteki kelime sayısını geri döndürür,
+//Eğer sözlük yüklenemediyse 0 döndürür
 unsigned int size(void)
 {
     return words;
 }
 
-// Unloads dictionary from memory, returning true if successful else false
+// Sözlüğü bellekten temizler,başarılı olursa true döndürüyor olmazsa false döndürüyor.
 bool unload(void)
 {
     for(int i = 0; i < N; i++)
