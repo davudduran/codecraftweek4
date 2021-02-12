@@ -20,7 +20,7 @@ node;
 const unsigned int N = 26;
 
 // Hash tablosu
-node *table[N];
+node *hashtable[N];
 int words=0;
 
 //Kelimeyi bir sayıya hashler.
@@ -28,20 +28,6 @@ unsigned int hash(const char *word)
 {
     return tolower(word[0]) - 'a';
 }
-
-//Kelime sözlükte ise true değerini döndürür, değilse false değerini döndürür.
-bool check(const char *word)
-{
-    int temp=hash(word);
-    node *cursor=table[temp];
-    while(cursor!=NULL){
-        if (strcasecmp(cursor->word, word) == 0) return true;
-        cursor = cursor->next;
-    }
-    return 0;
-}
-
-
 
 // Sözlüğü belleğe yükler, başarılı olursa true döndürür, değilse false değerini döndürür.
 bool load(const char *dictionary)
@@ -59,13 +45,13 @@ bool load(const char *dictionary)
 
         int x=hash(dicwords);
 
-        if(table[x]==NULL) {
+        if(hashtable[x]==NULL) {
             n->next=NULL;
-            table[x]=n;}
+            hashtable[x]=n;}
 
         else {
-            n->next = table[x];
-            table[x]=n;
+            n->next = hashtable[x];
+            hashtable[x]=n;
         }
         words++;
     }
@@ -80,12 +66,24 @@ unsigned int size(void)
     return words;
 }
 
+//Kelime sözlükte ise true değerini döndürür, değilse false değerini döndürür.
+bool check(const char *word)
+{
+    int temp=hash(word);
+    node *cursor=hashtable[temp];
+    while(cursor!=NULL){
+        if (strcasecmp(cursor->word, word) == 0) return true;
+        cursor = cursor->next;
+    }
+    return 0;
+}
+
 // Sözlüğü bellekten temizler,başarılı olursa true döndürüyor olmazsa false döndürüyor.
 bool unload(void)
 {
     for(int i = 0; i < N; i++)
     {
-        node *cursor = table[i];
+        node *cursor = hashtable[i];
         node *temp = cursor;
 
         while(cursor != NULL)
